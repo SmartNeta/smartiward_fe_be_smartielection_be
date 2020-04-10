@@ -374,7 +374,7 @@ public class CitizenService {
 
     public List<Map<String, Object>> findNearestVoters(HashMap<String, Object> map) {
         List<Map<String, Object>> voters = new ArrayList<>();
-        String query = "SELECT c.voter_id, c.first_name, c.family_name,c.gender, c.age,  concat(COALESCE(c.address, ''), ',' ,COALESCE(c.state , ''),',',COALESCE(c.pincode, '')) as address, c.srno, c.booth_no, c.responded_status, SQRT(POW(69.1 * ( c.latitude - " + map.get("latitude") + "), 2) + POW(69.1 * (" + map.get("longitude") + " - c.longitude) * COS(c.latitude / 57.3), 2)) AS distance FROM citizen c where c.state = '" + map.get("stateName") + "' ";
+        String query = "SELECT c.voter_id, c.first_name, c.family_name,c.gender, c.age,  concat(COALESCE(c.address, ''), ',' ,COALESCE(c.state , ''),',',COALESCE(c.pincode, '')) as address, c.srno, c.booth_no, c.responded_status, c.id, SQRT(POW(69.1 * ( c.latitude - " + map.get("latitude") + "), 2) + POW(69.1 * (" + map.get("longitude") + " - c.longitude) * COS(c.latitude / 57.3), 2)) AS distance FROM citizen c where c.state = '" + map.get("stateName") + "' ";
         String voterId = Objects.nonNull(map.get("voterId")) ? map.get("voterId") + "" : null;
         String wardNo = Objects.nonNull(map.get("wardNo")) && map.get("wardNo") != "All" ? map.get("wardNo") + "" : null;
         String boothId = Objects.nonNull(map.get("boothId")) && !(map.get("boothId") + "").equalsIgnoreCase("-1") && !(map.get("boothId") + "").equalsIgnoreCase("None") ? map.get("boothId") + "" : null;
@@ -438,6 +438,7 @@ public class CitizenService {
             voterMap.put("booth_no", voter[7]);
             voterMap.put("boothName", voter[7]);
             voterMap.put("responded_status", voter[8]);
+            voterMap.put("id", voter[9]);
             return voterMap;
         }).forEachOrdered((voterMap) -> {
             voters.add(voterMap);
