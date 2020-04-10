@@ -440,7 +440,8 @@ public class VolunteerController {
     public List<Map<String, Object>> uploadCitizen(HttpServletRequest request, @RequestBody ArrayList<Citizen> citizens) {
         for (Citizen citizen : citizens) {
             Citizen citizenTemp = citizenService.findById(citizen.getId()).get();
-            if (citizenTemp != null && citizenTemp.getModifiedDate().before(citizen.getModifiedDate())) {
+//            if (citizenTemp != null && citizenTemp.getModifiedDate().before(citizen.getModifiedDate())) {
+            if (citizenTemp != null) {
                 if (Objects.nonNull(citizen.getPartyPreference()) && Strings.isNotBlank(citizen.getPartyPreference())) {
                     citizenTemp.setPartyPreference(citizen.getPartyPreference());
                 }
