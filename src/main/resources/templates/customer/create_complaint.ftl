@@ -5,13 +5,18 @@
 <#include "header.ftl">
 
 <head>
-	<script src="/assets/js/customer-complaints.js" type="text/javascript"></script>
-    <title>SmartiWard | Complaints</title>
+
+    <script src="/assets/js/customer-complaints.js" type="text/javascript"></script>
+
+    <title>SmartiWard | New Complaint</title>
     <style>
     	.align-right{
             float: right;
     	}
-
+        #mapComplaint {
+            width : 100% !important;
+            height: auto !important;
+        }
 	@media(max-width: 550px){
             .header{
                 background: #fff;
@@ -26,7 +31,7 @@
 		left: 0px;
             }
             .document-title {
- 		margin: -58px -750px 0px -750px;
+ 		margin: margin: -80px -757px 30px !important;
             }
             footer {
    	 	height: auto !important;
@@ -58,14 +63,38 @@
     		width: max-content;
     		margin: auto;
             }  
-	}	
-	</style>
+	}
+
+        #map {
+            height: 450px !important;
+        }
+        .input-controls {
+          margin-top: 10px;
+          border: 1px solid transparent;
+          border-radius: 2px 0 0 2px;
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          height: 32px;
+          outline: none;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        #searchInput {
+          background-color: #fff;
+          font-family: Roboto;
+          font-size: 15px;
+          font-weight: 300;
+          text-overflow: ellipsis;
+        }
+        #searchInput:focus {
+          border-color: #4d90fe;
+        }
+    </style>
 </head>
 
 
 <body class="" ng-controller="complaintsController">
 
-<div class="page-wrapper">
+<div class="page-wrapper" >
 	<#include "navbar.ftl">
 
     <div class="main" style="margin-top: 63px; display: block;">
@@ -73,25 +102,13 @@
             <div class="container">
                 <div class="content">
                     
-    <div class="document-title" style="background-image: linear-gradient(0deg,#f29828,#f29828)!important;  background: linear-gradient(0deg,#f29828,#f29828)!important;">
-        <h1>My Complaints</h1>
+    <div class="document-title" style="background-image: linear-gradient(0deg,#009f8b,#009f8b)!important;  background: linear-gradient(0deg,#009f8b,#009f8b)!important;">
+        <h1>Register New Complaint</h1>
     </div><!-- /.document-title -->
-
-    <form class="filter">
-        <div class="row">
-            <div class="col-sm-12 align-right">
-                <button type="button" ng-click="openRegisterPopup()" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i>Register New Complaint</button>
-            </div><!-- /.col-* -->
-        </div><!-- /.row -->
-    </form>
 
 
 <!-- <i class="fa fa-envelope prefix"></i> -->
-    <div id="modelRegister"  class="modal-container" style=" top: 10%; left: 20%; display: none;">
-            <div class="modal-header">
-              <p class="heading lead" style="margin-top: 10px;">Register New Complaint</p>
-            </div>
-
+    <div style=" top: 10%; left: 20%;">
             <div class="form-group"></div>
             <div ng-if="loading" class="loader"></div>
             
@@ -125,10 +142,36 @@
                         <input type="file" id="uploadFile" name="complaintImage" style="width: 100%;" accept="image/png, image/jpeg" >
                     </div>
 
+                    <div class="form-group">  
+                        <div id="mapComplaint">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12">
+                                    <input id="searchInput" class="form-control" type="text" placeholder="Enter a location">
+                                </div>
+                            </div>
+                            
+                            <map zoom="8" id="incidentMap"></map>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-6">
+                                    <input class="form-control" type="text" name="location" id="location" ng-model="mapCenter">
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <input class="form-control" type="text" name="lat" id="lat" ng-model="latitude">
+                                </div>
+                                <div class="col-lg-4 col-sm-6">
+                                    <input class="form-control" type="text" name="lng" id="lng" ng-model="longitude">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-info waves-effect ml-auto" ng-click="closeRegisterPopup()" >Close <i class="fa fa-close"></i></button>
+                    <button type="button" class="btn btn-outline-info waves-effect ml-auto" ng-click="clearRegistrationForm()" >
+                        Clear <i class="fa fa-close"></i>
+                    </button>
                     <button type="submit" class="btn btn-info waves-effect waves-light">Register
                         <i class="fa fa-sign-in ml-1"></i>
                     </button>
@@ -136,61 +179,6 @@
             </form>
 
     </div>
-
-<h2 class="page-title">
-    {{complaintsList.length}} complaint(s) you have registered
-    <form method="get" action="?" class="filter-sort">
-                
-        <div class="form-group" style="font-size: initial;">
-        <label>Filter By Status : </label>
-            <select title="Status" ng-model="searchKey" ng-change="filter(searchKey)">
-                <option name="All">All</option>
-                <option name="Assigned">Assigned</option>
-                <option name="Unassigned">Unassigned</option>
-                <option name="Inprogress">Inprogress</option>
-                <option name="Resolved">Resolved</option>
-                <option name="Ignore">Ignore</option>
-                <option name="Out Of Scope">Out Of Scope</option>
-                <option name="Under Review">Under Review</option>
-            </select>
-        </div><!-- /.form-group -->
-    </form>
-    
-</h2>
-
-<div class="cards-row" ng-if="complaintsList.length > 0">
-    
-
-        <div class="card-row" ng-repeat="complaint in complaintsList">
-            <div class="card-row-inner">
-                <div class="card-row-image" ng-if="complaint.image" ng-repeat="image in complaint.images" style="background-image:url('/open/mobile/download-image/{{image}}')">
-                    <div class="card-row-label"><a>Image</a></div>
-                </div>
-
-                <div class="card-row-image" ng-if="!complaint.image" style="background-image:url('/assets/img/tmp/imgnotfound.jpg')">
-                </div>
-
-                <div class="card-row-body">
-                    <h2 class="card-row-title"><a>Complaint &#35;{{complaint.incidentId}}</a></h2>
-                    <div class="card-row-content"><p>{{complaint.complaint}}</p></div>
-                </div>
-
-                <div class="card-row-properties">
-                    <dl>
-                            <dd>Department</dd><dt>{{complaint.subDepartment.department.name}}</dt>
-                            <dd>Sub department</dd><dt>{{complaint.subDepartment.name}}</dt>
-                            <dd>Status</dd><dt>{{complaint.status}}</dt>
-                            <dd>Registered on</dd><dt>{{complaint.createdDate | date : "dd.MM.y"}}</dt>
-                            <dd>Tentative Date Of Completion</dd><dt ng-if="complaint.tentativeDateOfCompletion">{{complaint.tentativeDateOfCompletion | date : "dd.MM.y"}}</dt><dt ng-if="!complaint.tentativeDateOfCompletion">N/A</dt>
-                            <dd>Registered from</dd><dt>{{complaint.compliantSource}}</dt>
-                    </dl>
-                </div>
-            </div>
-        </div>
-
-
-    
-</div><!-- /.cards-row -->
 
 <!--
 <div class="pager">

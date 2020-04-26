@@ -21,13 +21,13 @@
             }, function (error) {
                 toastr.error("Failed to Load notification.", 'Error!');
             });
-         }
+        }
 
         $scope.markSeen = function (notificatoinId) {
-        	var data = {
-        			"notificatoinId" : notificatoinId,
-        			"citizenId" : $scope.citizen.id
-        	}
+            var data = {
+                "notificatoinId": notificatoinId,
+                "citizenId": $scope.citizen.id
+            }
             $http.post("/open/mobile/notificationSeen", data).then(function (response) {
                 toastr.success("Notification(s) marked as seen.", 'Success!');
                 $scope.notificationCount = response.data.count;
@@ -36,7 +36,7 @@
             }, function (error) {
                 toastr.error("Failed to Load notification.", 'Error!');
             });
-         }
+        }
 
         $scope.logout = function () {
             $http.post("/open/mobile/logoutCitizen/" + $scope.citizen.voterId).then(function (response) {
@@ -52,30 +52,34 @@
         $scope.notification = function () {
             location.href = "/open/customer/notification"
         }
-        
+
         $scope.home = function () {
-    	      location.href = "/open/customer/home"
+            location.href = "/open/customer/home"
         }
 
         $scope.contactUs = function () {
-  	      location.href = "/open/customer/contact-us"
+            location.href = "/open/customer/contact-us"
         }
 
         $scope.complaints = function () {
-  	      location.href = "/open/customer/complaints"
+            location.href = "/open/customer/complaints"
         }
+
+        $scope.newComplaint = function () {
+            location.href = "/open/customer/new-complaint";
+        };
 
         $scope.applicationSetting = {};
         $scope.getApplicationSetting = function () {
             $http.get("/open/mobile/getApplicationSettings/").then(function (response) {
-            	$scope.applicationSetting = response.data.data;
-            	$scope.tokens = $scope.applicationSetting.footer.split('Smart Neta');
+                $scope.applicationSetting = response.data.data;
+                $scope.tokens = $scope.applicationSetting.footer.split('Smart Neta');
             }, function (error) {
                 toastr.error("Failed to Load Application setting", 'Error!');
             });
         }
         $scope.getApplicationSetting();
         $scope.myNotifications();
-}
+    }
 
 })();

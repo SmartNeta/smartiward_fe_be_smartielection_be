@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
+//import com.google.common.collect.Lists;
 import com.mnt.sampark.core.db.model.UserDetail;
 import com.mnt.sampark.core.shiro.service.UserService;
 import com.mnt.sampark.modules.mdm.db.domain.Citizen;
@@ -92,7 +92,7 @@ public class DataGeneratorController {
     public Map<String, Object> logout(HttpServletRequest request, HttpServletResponse response) {
     	List<Complaint> complaints = new ArrayList<Complaint>();
     	List<Citizen> citizens = citizenRepository.findByBoothIn(boothRepository.findAll());
-    	List<SubDepartment> subDepartments = Lists.newArrayList(subDepartmentRepository.findAll());
+    	List<SubDepartment> subDepartments = (List<SubDepartment>) subDepartmentRepository.findAll();
     	String status[] = {"Assigned", "Inprogress", "Resolved", "Ignore", "Out Of Scope", "Under Review"}; 
     	Random rand = new Random();
     	for(int index = 0 ; index < 100000 ; index ++) {

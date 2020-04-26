@@ -85,6 +85,10 @@
             location.href = "/open/customer/complaints"
         }
 
+        $scope.newComplaint = function () {
+            location.href = "/open/customer/new-complaint";
+        };
+
         $scope.applicationSetting = {};
         $scope.getApplicationSetting = function () {
             $http.get("/open/mobile/getApplicationSettings/").then(function (response) {

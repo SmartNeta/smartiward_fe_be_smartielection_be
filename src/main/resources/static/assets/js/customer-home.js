@@ -45,33 +45,37 @@
         $scope.logout = function () {
             $http.post("/open/mobile/logoutCitizen/" + $scope.citizen.voterId).then(function (response) {
                 $scope.logoutResult = response.data.count;
-                $window.localStorage.removeItem("citizen")
-                location.href = "/open/customer/login"
+                $window.localStorage.removeItem("citizen");
+                location.href = "/open/customer/login";
             }, function (error) {
-                $window.localStorage.removeItem("citizen")
-                location.href = "/open/customer/login"
+                $window.localStorage.removeItem("citizen");
+                location.href = "/open/customer/login";
             });
-        }
+        };
 
         $scope.notification = function () {
-            location.href = "/open/customer/notification"
-        }
+            location.href = "/open/customer/notification";
+        };
 
         $scope.home = function () {
-            location.href = "/open/customer/home"
-        }
+            location.href = "/open/customer/home";
+        };
 
         $scope.contactUs = function () {
-            location.href = "/open/customer/contact-us"
-        }
+            location.href = "/open/customer/contact-us";
+        };
 
         $scope.complaints = function () {
-            location.href = "/open/customer/complaints"
-        }
+            location.href = "/open/customer/complaints";
+        };
+
+        $scope.newComplaint = function () {
+            location.href = "/open/customer/new-complaint";
+        };
 
         $scope.showNews = function (newsId) {
-            location.href = "/open/customer/news#" + newsId
-        }
+            location.href = "/open/customer/news#" + newsId;
+        };
 
         $scope.applicationSetting = {};
         $scope.getApplicationSetting = function () {

@@ -18,7 +18,10 @@
                             	<a href="#" ng-click="home()">Home</a>
             	            </li>
                         	<li >
-                            	<a href="#" ng-click="complaints()">Complaints</a>
+                            	<a href="#" ng-click="complaints()">My Complaints</a>
+            	            </li>
+                        	<li >
+                            	<a href="#" ng-click="newComplaint()">New Complaint</a>
             	            </li>
                         	<li >
                             	<a href="#" ng-click="contactUs()">Contact Us</a>

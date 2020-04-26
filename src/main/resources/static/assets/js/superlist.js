@@ -68,7 +68,7 @@ $(document).ready(function() {
     };
 
     if (map.length) {
-        map.google_map(map_settings);
+        //map.google_map(map_settings);
     }
 
     var map = $('#fullscreen-map');

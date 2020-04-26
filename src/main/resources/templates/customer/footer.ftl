@@ -25,7 +25,7 @@
     <div class="footer-bottom">
         <div class="container">
             <div ng-if="tokens.length == 2" class="footer-bottom-left footer-text-center">
-                &copy; {{tokens[0]}} <a target="_blank" href="http://smartneta.com/">Smart Neta</a> {{tokens[1]}} <a target="_blank" href="http://smartneta.com/privacy-policy/">Privacy Policy</a>.
+                &copy; {{tokens[0]}} <a target="_blank" href="http://smartneta.com/" style="color:#fff">Smart Neta</a> {{tokens[1]}} <a target="_blank" href="http://smartneta.com/privacy-policy/"  style="color: #fff">Privacy Policy</a>.
             </div><!-- /.footer-bottom-left -->
             <div ng-if="tokens.length != 2" class="footer-bottom-left footer-text-center">
                 &copy; {{applicationSetting.footer}} <a target="_blank" href="http://smartneta.com/privacy-policy/">Privacy Policy</a>.
